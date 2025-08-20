@@ -1,100 +1,52 @@
-"use client";
-import { useState, useMemo } from "react";
-import links from "../public/links.json";
+import Script from "next/script";
 
-export default function Page() {
-  const [q, setQ] = useState("");
-
-  const categories = useMemo(() => Object.keys(links as any), []);
-  const filtered = useMemo(() => {
-    const out: Record<string, any[]> = {};
-    categories.forEach((cat) => {
-      const items = (links as any)[cat].filter((x: any) =>
-        (x.name + " " + x.desc).toLowerCase().includes(q.toLowerCase())
-      );
-      if (items.length) out[cat] = items;
-    });
-    return out;
-  }, [q, categories]);
-
+export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50 text-gray-900">
-      {/* NAV / HERO */}
-      <section className="max-w-5xl mx-auto px-6 pt-16 pb-10">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight flex items-center gap-3">
-          <span>⚡</span> AI Work & Play
-        </h1>
-        <p className="mt-3 text-lg text-gray-600">
-          Discover the top AI tools — ranked & ready to launch.
+    <main className="flex min-h-screen flex-col items-center justify-center p-8">
+      {/* Title */}
+      <h1 className="text-5xl font-bold text-center text-blue-600 mb-4">
+        AI Work & Play
+      </h1>
+
+      {/* Subtitle */}
+      <p className="text-lg text-center text-gray-700 mb-8 max-w-2xl">
+        Discover the best AI tools for work and play—handpicked and categorized for you.
+      </p>
+
+      {/* Buttons */}
+      <div className="flex gap-4">
+        <a
+          href="#useful"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          Explore AI Tools
+        </a>
+        <a
+          href="#fun"
+          className="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg shadow hover:bg-gray-300 transition"
+        >
+          Try Fun AI Apps
+        </a>
+      </div>
+
+      {/* Newsletter Signup */}
+      <div className="mt-12 w-full max-w-lg text-center">
+        <h2 className="text-2xl font-semibold mb-4">
+          Subscribe for Weekly AI Picks 🚀
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Get the best AI tools delivered straight to your inbox.
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-3">
-          <a href="#tools" className="px-5 py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-500">
-            Explore Tools
-          </a>
-          <a href="#guide" className="px-5 py-3 rounded-lg bg-white border font-semibold hover:bg-gray-50">
-            Free Guide
-          </a>
-        </div>
-      </section>
-
-      {/* SEARCH + LISTS */}
-      <section id="tools" className="max-w-5xl mx-auto px-6 pb-16">
-        <div className="rounded-xl border bg-white p-5 md:p-6 shadow-sm">
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Search tools (Ctrl/⌘+K)"
-            className="w-full rounded-md border px-4 py-3 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        {/* ConvertKit Embed */}
+        <div id="ck_embed">
+          <Script
+            async
+            data-uid="86ea159175"
+            src="https://aiworkplay.kit.com/86ea159175/index.js"
           />
-
-          {Object.keys(filtered).map((cat) => (
-            <div key={cat} className="mb-10">
-              <h2 className="text-xl font-bold mb-4">{cat}</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {filtered[cat].map((item: any) => (
-                  <a
-                    key={item.url}
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block p-4 rounded-lg border hover:border-blue-400 hover:shadow transition"
-                  >
-                    <div className="font-semibold">{item.name}</div>
-                    <div className="text-sm text-gray-500">{item.desc}</div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          ))}
         </div>
-      </section>
-
-      {/* EMAIL SIGNUP */}
-      <section id="guide" className="max-w-3xl mx-auto px-6 pb-20 text-center">
-        <h3 className="text-3xl font-bold">Get the Free Guide</h3>
-        <p className="mt-2 text-gray-600">10 Must-Know AI Tools to 10x Your Workflow</p>
-        <form className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="px-4 py-3 rounded-md border min-w-[260px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            type="submit"
-            className="px-6 py-3 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-500"
-          >
-            Get Guide
-          </button>
-        </form>
-      </section>
-
-      {/* SPONSOR */}
-      <section className="bg-gray-100">
-        <div className="max-w-5xl mx-auto px-6 py-10 text-center text-gray-600">
-          🚀 Sponsor Banner Here
-        </div>
-      </section>
+      </div>
     </main>
   );
 }
